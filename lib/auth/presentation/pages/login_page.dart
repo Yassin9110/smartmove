@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smart/auth/presentation/pages/sign_up_page.dart';
+import 'package:smart/ui/controller_page.dart';
 
 
 import '../../../../core/app_theme.dart';
@@ -45,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>  HomeScreen()));
+                    builder: (context) =>  ControllerPage()));
           }
           if (state is UserErrorState) {
             showToast("An error occurred: ${state.error}");
@@ -54,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
         builder: (context, state) {
           print(state);
           if (state is UserAuthLoadingState) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator(color: primaryColor,));
           }
 
           return Center(
@@ -148,12 +149,9 @@ class _LoginPageState extends State<LoginPage> {
                         Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
+                            color: primaryColor,
                             borderRadius: BorderRadius.circular(10),
-                            gradient: LinearGradient(
-                              colors: [primaryColor, secondaryColor],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
+
                           ),
                           child: MaterialButton(
                             onPressed: () {

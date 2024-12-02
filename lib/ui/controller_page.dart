@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:responsive_navigation_bar/responsive_navigation_bar.dart';
+import 'package:smart/ui/alarm_page.dart';
+import 'package:smart/ui/profile_page.dart';
 import 'package:smart/ui/record_page.dart';
 
 import '../../../../core/app_theme.dart';
@@ -29,7 +31,11 @@ class _ControllerPageState extends State<ControllerPage> {
       case 0:
         return  AudioRecorderPlayerPage();
       case 1:
+        return  AlarmPage();
+      case 2:
         return  HealthStatusWidget();
+      case 3:
+        return  ProfilePage();
 
       default:
         return  HomeScreen();
@@ -54,14 +60,21 @@ class _ControllerPageState extends State<ControllerPage> {
             text: 'Home',
             icon: Icons.home,
             backgroundGradient: LinearGradient(
-              colors: [primaryColor, secondaryColor],
+              colors: [primaryColor, Colors.black12],
             ),
           ),
           NavigationBarButton(
             text: 'Alarms',
             icon: Icons.alarm,
             backgroundGradient: LinearGradient(
-              colors: [primaryColor, secondaryColor],
+              colors:  [primaryColor, Colors.black12],
+            ),
+          ),
+          NavigationBarButton(
+            text: 'Monitor',
+            icon: Icons.monitor_heart,
+            backgroundGradient: LinearGradient(
+              colors:  [primaryColor, Colors.black12],
             ),
           ),
 
@@ -69,7 +82,7 @@ class _ControllerPageState extends State<ControllerPage> {
             text: 'Contact',
             icon: Icons.person,
             backgroundGradient: LinearGradient(
-              colors: [primaryColor, secondaryColor],
+              colors:  [primaryColor, Colors.black12],
             ),
           ),
         ],
