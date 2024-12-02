@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:smart/auth/presentation/pages/login_page.dart';
 import 'package:smart/ui/controller_page.dart';
 import 'auth/data/datasorce/authentication_remote_ds/authentication.dart';
 import 'auth/data/datasorce/user_remote_ds/user_remote_ds.dart';
 import 'auth/presentation/bloc/auth_bloc/authentication_bloc.dart';
+import 'auth/presentation/bloc/user_data_bloc/user_data_bloc.dart';
 import 'auth/presentation/pages/sign_up_page.dart';
 import 'core/networks/network_info.dart';
 import 'firebase_options.dart';
@@ -16,6 +18,10 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // await AuthenticationRemoteDsImpl(
+  //             networkInfo:
+  //                 NetworkInfoImpl(connectionChecker: InternetConnectionChecker()))
+  //         .signOut();
   runApp(
       MultiBlocProvider(
         providers: [
@@ -27,6 +33,12 @@ Future<void> main() async {
                           connectionChecker: InternetConnectionChecker())),
                   networkInfo: NetworkInfoImpl(
                       connectionChecker: InternetConnectionChecker()))),
+          BlocProvider(
+              create: (_) => UserBloc(
+                  usersDBModel: UsersRemoteDsImp(),
+                  authinticationRemoteDs: AuthenticationRemoteDsImpl(
+                      networkInfo: NetworkInfoImpl(
+                          connectionChecker: InternetConnectionChecker())))),
         ],
         child: MyApp(),
       )
@@ -60,7 +72,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: ControllerPage(),
+      home: LoginPage(),
     );
   }
 }
