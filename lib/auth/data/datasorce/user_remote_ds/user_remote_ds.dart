@@ -10,6 +10,8 @@ abstract class UsersRemoteDs {
   /// جلب جميع المستخدمين من [Firestore]
   Future<List<UserModel>> getUsers();
 
+  Future<void> updateUser(UserModel userModel);
+
   /// جلب المستخدم بناءً على authId
   Future<UserModel?> getUserByAuthId(String authId);
 }
@@ -26,7 +28,11 @@ class UsersRemoteDsImp implements UsersRemoteDs {
 
     await firestore.collection(collectionName).doc(nameDocumentId).set(userModel.toMap());
   }
-
+  @override
+  Future<void> updateUser(UserModel userModel) async {
+    final String userId = FirebaseAuth.instance.currentUser?.uid ?? '';
+    await firestore.collection(collectionName).doc(userId).update(userModel.toMap());
+  }
   @override
   Future<List<UserModel>> getUsers() async {
     final snapshot = await firestore.collection(collectionName).get();

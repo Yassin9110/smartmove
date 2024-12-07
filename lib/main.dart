@@ -11,9 +11,18 @@ import 'auth/presentation/bloc/user_data_bloc/user_data_bloc.dart';
 import 'auth/presentation/pages/sign_up_page.dart';
 import 'core/networks/network_info.dart';
 import 'firebase_options.dart';
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+
+
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize the Android Alarm Manager
+  await AndroidAlarmManager.initialize();
+
+  // Initialize the notification plugin
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

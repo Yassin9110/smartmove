@@ -29,9 +29,17 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         UserModel userModel = await usersDBModel.getUserByAuthId(userId) ??
             UserModel(
               name: 'name',
-              userId: userId, email: 'email', phone: '', emergencyName: '', emergencyNumber: '', age: 0,
+              userId: userId, email: 'email', emergencyName: '', emergencyNumber: '', age: 0,
             );
         emit(UserLoadedState(usersModel: userModel));
+      } else if (event is UpdateUserEvent)
+      {
+        UserModel userModel = event.userModel;
+
+
+        await usersDBModel.updateUser(userModel);
+
+        add(GetUserEvent());
       }
     });
   }

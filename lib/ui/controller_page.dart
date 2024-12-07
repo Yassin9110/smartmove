@@ -31,14 +31,14 @@ class _ControllerPageState extends State<ControllerPage> {
       case 0:
         return  AudioRecorderPlayerPage();
       case 1:
-        return  AlarmPage();
+        return  TestConnectionPage();
       case 2:
         return  HealthStatusWidget();
       case 3:
         return  ProfilePage();
 
       default:
-        return  HomeScreen();
+        return  TestConnectionPage();
     }
   }
 

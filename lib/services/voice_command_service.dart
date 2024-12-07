@@ -1,24 +1,41 @@
-//import 'package:speech_to_text/speech_to_text.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 
 class VoiceCommandService {
-  // Simulate initializing speech recognition
-  Future<bool> initialize() async {
-    print("Mock: Initializing speech recognition...");
-    await Future.delayed(Duration(seconds: 1)); // Simulate delay
-    return true;  // Simulated success
-  }
+  final String apiUrl = "http://192.168.1.11:5002/Assistant";
 
-  // Simulate listening for a command
-  void listenForCommand() {
-    print("Mock: Listening for voice command...");
-    // Simulate recognizing a command after a delay
-    Future.delayed(Duration(seconds: 2), () {
-      print("Mock: Recognized command - 'Move Forward'");
-    });
-  }
+  Future<Map<String, dynamic>> sendAudioToApi(String audioPath) async {
+    try {
+      var request = http.MultipartRequest('POST', Uri.parse(apiUrl));
+      request.files.add(await http.MultipartFile.fromPath('audio', audioPath));
 
-  // Simulate stopping listening
-  void stopListening() {
-    print("Mock: Stopping voice recognition...");
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        final responseBody = await response.stream.bytesToString();
+        final resonse_data = json.decode(responseBody);
+        final answer_as_text = resonse_data["response"];
+        print(responseBody);
+        final audioBase64 = resonse_data['audio_data'];
+
+        // Decode Base64 string to bytes
+        final audioBytes = base64Decode(audioBase64);
+
+        // Save audio to a file
+        final directory = await getApplicationDocumentsDirectory();
+        final filePath = '${directory.path}/response_audio.wav';
+
+        final audioFile = File(filePath);
+        print("\n\n\n THHHHEEEEEE FILLLLLEEEEEE:  ${audioFile}  \n\n\n");
+        await audioFile.writeAsBytes(audioBytes);
+        return { "response" : answer_as_text, "audio" :audioFile } ;// Co// ntains "response", "signal", and "audio_url"
+      } else {
+        return {"error": "Failed to communicate with the server."};
+      }
+    } catch (e) {
+      return {"error": "An error occurred: $e"};
+    }
   }
 }

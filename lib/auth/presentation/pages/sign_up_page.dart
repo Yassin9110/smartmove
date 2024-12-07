@@ -152,7 +152,6 @@ class _SignUpPageState extends State<SignUpPage> {
                             name: sanitizedName,
                             userId: '',
                             email: sanitizedEmail,
-                            phone: '',
                             emergencyName: sanitizedEmergencyName,
                             emergencyNumber: sanitizedEmergencyNumber,
                             age: int.parse(sanitizedAge),
