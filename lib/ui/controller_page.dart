@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:responsive_navigation_bar/responsive_navigation_bar.dart';
 import 'package:smart/ui/alarm_page.dart';
@@ -29,23 +27,32 @@ class _ControllerPageState extends State<ControllerPage> {
   Widget _getSelectedPage() {
     switch (_selectedIndex) {
       case 0:
-        return  AudioRecorderPlayerPage();
+        return AudioRecorderPlayerPage();
       case 1:
-        return  TestConnectionPage();
+        return TestConnectionPage();
       case 2:
-        return  HealthStatusWidget();
+        return HealthStatusWidget();
       case 3:
-        return  ProfilePage();
-
+        return ProfilePage();
       default:
-        return  TestConnectionPage();
+        return TestConnectionPage();
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _getSelectedPage(),
+      body: Stack(
+        children: [
+          // Dark blue background behind the content
+          Container(
+            color: Colors.amber, // Dark blue background color
+            height: double.infinity, // Ensures it covers the entire height
+          ),
+          // Main content
+          _getSelectedPage(),
+        ],
+      ),
       bottomNavigationBar: ResponsiveNavigationBar(
         selectedIndex: _selectedIndex,
         onTabChange: changeTab,
@@ -54,7 +61,7 @@ class _ControllerPageState extends State<ControllerPage> {
           fontWeight: FontWeight.bold,
           fontFamily: 'title',
         ),
-        backgroundColor: Colors.grey[850],
+        backgroundColor: primaryColor, // Match the theme color
         navigationBarButtons: <NavigationBarButton>[
           NavigationBarButton(
             text: 'Home',
@@ -67,22 +74,21 @@ class _ControllerPageState extends State<ControllerPage> {
             text: 'Alarms',
             icon: Icons.alarm,
             backgroundGradient: LinearGradient(
-              colors:  [primaryColor, Colors.black12],
+              colors: [primaryColor, Colors.black12],
             ),
           ),
           NavigationBarButton(
             text: 'Monitor',
             icon: Icons.monitor_heart,
             backgroundGradient: LinearGradient(
-              colors:  [primaryColor, Colors.black12],
+              colors: [primaryColor, Colors.black12],
             ),
           ),
-
           NavigationBarButton(
             text: 'Contact',
             icon: Icons.person,
             backgroundGradient: LinearGradient(
-              colors:  [primaryColor, Colors.black12],
+              colors: [primaryColor, Colors.black12],
             ),
           ),
         ],

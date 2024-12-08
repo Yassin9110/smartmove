@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 final primaryColor = Color(0xff2E8BC0);
-final secondaryColor = Color(0xfff9faed);
+final secondaryColor = Color(0xffd3e312);
 
 final appTheme = ThemeData(
   appBarTheme: AppBarTheme(
     backgroundColor: primaryColor,
-    foregroundColor: Colors.white,
+    foregroundColor: Colors.blueAccent[400],
     centerTitle: true,
   ),
   brightness: Brightness.light,
@@ -18,7 +18,7 @@ final appTheme = ThemeData(
     displayLarge: const TextStyle(
       fontSize: 24.0,
       fontWeight: FontWeight.bold,
-      color: Color(0xff035696),
+      color: Color(0xff000305),
     ),
     bodyLarge: TextStyle(
       fontSize: 20.0,
@@ -48,7 +48,7 @@ final appTheme = ThemeData(
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      foregroundColor: Colors.white,
+      foregroundColor: Colors.black,
       backgroundColor: Color(0xff035696),
     ),
   ),

@@ -10,6 +10,8 @@ import '../auth/presentation/bloc/auth_bloc/authentication_bloc.dart';
 import '../auth/presentation/bloc/user_data_bloc/user_data_bloc.dart';
 import '../auth/presentation/pages/login_page.dart';
 import '../core/networks/network_info.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -38,6 +40,20 @@ class _ProfilePageState extends State<ProfilePage> {
 
     // Fetch user data when the page initializes
     context.read<UserBloc>().add(GetUserEvent());
+
+
+  }
+
+  Future<void> _makeCall(String phoneNumber) async {
+    final Uri callUri = Uri(scheme: 'tel', path: phoneNumber);
+    if (await canLaunchUrl(callUri)) {
+      await launchUrl(callUri);
+    } else {
+      // Handle the error when the device cannot launch the phone dialer
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Could not make the call")),
+      );
+    }
   }
 
   @override
@@ -76,6 +92,31 @@ class _ProfilePageState extends State<ProfilePage> {
                       _buildEditableField('Emergency Number', emergencyNumberController, Icons.phone),
                       const SizedBox(height: 20),
                       _buildSaveButton(),
+                      const SizedBox(height: 15),
+                      // Emergency call button
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.redAccent,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: MaterialButton(
+                          onPressed: () {
+                            String emergencyNumber = emergencyNumberController.text.trim();
+                            if (emergencyNumber.isNotEmpty) {
+                              _makeCall(emergencyNumber);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text("Emergency number is not set")),
+                              );
+                            }
+                          },
+                          child: const Text(
+                            'Call Emergency Number',
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                        ),
+                      ),
                       const SizedBox(height: 15),
                       Container(
                         width: double.infinity,

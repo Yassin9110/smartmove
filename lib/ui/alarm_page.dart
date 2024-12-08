@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 
 Future<String> fetchConnectionStatus() async {
-  final String url = "http://192.168.1.11:5002/testConnection";
+  final String url = "http://192.168.1.10:5002/testConnection";
 
   try {
     final response = await http.get(Uri.parse(url));

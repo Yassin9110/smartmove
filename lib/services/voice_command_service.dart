@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
 class VoiceCommandService {
-  final String apiUrl = "http://192.168.1.11:5002/Assistant";
+  final String apiUrl = "http://192.168.1.10:5002/Assistant";
 
   Future<Map<String, dynamic>> sendAudioToApi(String audioPath) async {
     try {
