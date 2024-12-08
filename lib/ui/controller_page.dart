@@ -42,12 +42,14 @@ class _ControllerPageState extends State<ControllerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Set the primary color as the Scaffold's background
+      backgroundColor: primaryColor,
       body: Stack(
         children: [
-          // Dark blue background behind the content
+          // Background color layer
           Container(
-            color: Colors.amber, // Dark blue background color
-            height: double.infinity, // Ensures it covers the entire height
+            color: primaryColor, // Use your theme's primary color
+            height: double.infinity,
           ),
           // Main content
           _getSelectedPage(),
@@ -61,7 +63,7 @@ class _ControllerPageState extends State<ControllerPage> {
           fontWeight: FontWeight.bold,
           fontFamily: 'title',
         ),
-        backgroundColor: primaryColor, // Match the theme color
+        backgroundColor: primaryColor, // Ensure footer matches the theme
         navigationBarButtons: <NavigationBarButton>[
           NavigationBarButton(
             text: 'Home',
